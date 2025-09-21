@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Black Market Tablet</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="app" class="hidden">
+  <div class="tablet-frame">
+    <div class="tablet-header">
+      <div class="title">Black Market</div>
+      <div class="time" id="time"></div>
+      <button class="close" id="closeBtn">✕</button>
+    </div>
+    <div class="tablet-content">
+      <div class="items" id="items"></div>
+      <div class="sidebar" id="sidebar">
+        <h3>Details</h3>
+        <div id="detailsEmpty">Select an item</div>
+        <div id="details" class="hidden">
+          <div class="detail-head">
+            <img id="dIcon" class="detail-icon hidden" alt="icon" />
+            <h2 id="dLabel"></h2>
+          </div>
+          <p id="dStock"></p>
+          <p id="dPrice"></p>
+          <div id="dLicense" class="license hidden"></div>
+          <label class="qty-label">Quantity
+            <input type="number" id="qty" min="1" value="1" />
+          </label>
+          <button id="buyBtn">Purchase</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer">Press ESC or Close to exit</div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

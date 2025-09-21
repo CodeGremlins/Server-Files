@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Job Center Tablet</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+</head>
+<body>
+  <div id="tablet" class="hidden">
+    <div class="tablet-frame">
+      <div class="tablet-header">
+        <div class="app-title">Job Center</div>
+        <div class="header-actions">
+          <button id="close-btn" class="icon-btn" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="tablet-body">
+        <aside class="jobs-pane">
+          <h2>Jobs</h2>
+          <ul id="job-list" class="jobs-list" aria-label="Available jobs"></ul>
+        </aside>
+        <main class="detail-pane">
+          <h2 id="job-title" class="job-heading">Select a job</h2>
+          <label for="motivation" class="motivation-label">Motivation</label>
+          <textarea id="motivation" placeholder="Briefly explain your motivation..." aria-multiline="true" aria-label="Motivation"></textarea>
+          <div class="action-bar">
+            <button id="apply-btn" disabled class="primary" aria-disabled="true">Apply</button>
+          </div>
+          <div id="status" class="status-line" role="status" aria-live="polite"></div>
+        </main>
+      </div>
+      <div class="tablet-footer">
+        <span>© Job Center</span>
+        <span class="hint">Press ESC to close</span>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

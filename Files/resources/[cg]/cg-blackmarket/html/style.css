@@ -1,0 +1,53 @@
+* { box-sizing: border-box; }
+body { margin:0; font-family: 'Rubik', sans-serif; background: transparent; }
+.hidden { display:none !important; }
+#app { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; backdrop-filter: blur(6px) brightness(0.4); }
+
+.tablet-frame { width: 880px; height: 520px; background: #0d1117; border-radius: 28px; padding:18px 18px 10px; display:flex; flex-direction:column; box-shadow:0 0 0 3px #1f2630, 0 8px 28px rgba(0,0,0,.65); border:2px solid #222; position:relative; }
+.tablet-frame:before { content:''; position:absolute; top:10px; left:50%; transform:translateX(-50%); width:90px; height:6px; background:#222831; border-radius:3px; }
+.tablet-header { display:flex; align-items:center; gap:18px; }
+.tablet-header .title { font-size:1.4rem; font-weight:600; color:#f0f6fc; letter-spacing:.5px; }
+.tablet-header .time { margin-left:auto; font-size:.9rem; color:#8b949e; }
+.tablet-header .close { background:#ff4d4f; color:#fff; border:none; width:34px; height:34px; border-radius:12px; cursor:pointer; font-size:16px; font-weight:600; transition:.2s; }
+.tablet-header .close:hover { background:#ff6d6f; }
+
+.tablet-content { flex:1; display:flex; gap:14px; margin-top:12px; }
+.items { flex:2.2; display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; padding-right:4px; overflow:auto; }
+.items::-webkit-scrollbar { width:8px; }
+.items::-webkit-scrollbar-thumb { background:#222c37; border-radius:4px; }
+.item-card { background:#161b22; border:1px solid #1f2630; border-radius:16px; padding:12px; display:flex; flex-direction:column; gap:6px; cursor:pointer; position:relative; transition:.2s; }
+.item-card .icon-wrap { width:56px; height:56px; align-self:flex-start; display:flex; align-items:center; justify-content:center; background:#0f1419; border:1px solid #222c37; border-radius:14px; margin-bottom:4px; }
+.item-card .icon-wrap img { max-width:42px; max-height:42px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.5)); image-rendering:crisp-edges; }
+.item-card:hover { border-color:#2e4862; background:#1d2630; }
+.item-card h4 { margin:0; font-size:15px; font-weight:500; color:#e6edf3; }
+.item-card .price { font-size:13px; color:#7d8590; }
+.item-card .stock { font-size:11px; color:#adb6c2; letter-spacing:.5px; }
+.item-card .badge { position:absolute; top:8px; right:8px; background:#1d4ed8; color:#fff; font-size:10px; padding:2px 6px; border-radius:6px; letter-spacing:.5px; }
+.item-card.low .stock { color:#ffb347; }
+.item-card.out { opacity:0.4; filter:grayscale(0.5); }
+.item-card.out:hover { border-color:#1f2630; background:#161b22; cursor:not-allowed; }
+
+.sidebar { flex:1; background:#161b22; border:1px solid #1f2630; border-radius:16px; padding:16px; display:flex; flex-direction:column; }
+.sidebar h3 { margin:0 0 12px; font-size:14px; letter-spacing:1px; color:#8b949e; text-transform:uppercase; }
+#details h2 { margin:0 0 8px; font-weight:600; font-size:20px; color:#f0f6fc; }
+#details .detail-head { display:flex; align-items:center; gap:12px; }
+.detail-icon { width:54px; height:54px; background:#0f1419; border:1px solid #222c37; border-radius:16px; padding:6px; object-fit:contain; }
+#details p { margin:0 0 6px; font-size:13px; color:#adb6c2; }
+.license { font-size:11px; background:#2d1f46; color:#c7a4ff; padding:4px 8px; border-radius:6px; display:inline-block; margin-bottom:8px; }
+.qty-label { font-size:12px; color:#8b949e; display:flex; flex-direction:column; gap:4px; margin:10px 0 12px; }
+.qty-label input { background:#0d1117; border:1px solid #2d3642; border-radius:8px; padding:6px 10px; font-size:14px; color:#fff; }
+#buyBtn { background:#238636; border:none; color:#fff; padding:10px 14px; font-size:14px; font-weight:600; border-radius:10px; cursor:pointer; letter-spacing:.5px; box-shadow:0 2px 6px rgba(0,0,0,.4); }
+#buyBtn:hover { background:#2ea043; }
+#buyBtn:disabled { background:#30363d; cursor:not-allowed; }
+.footer { text-align:center; font-size:11px; letter-spacing:1px; color:#5d6773; margin-top:6px; }
+
+.fade-in { animation: fade .25s ease; }
+@keyframes fade { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+/* Responsive scaling */
+@media (max-width: 1100px) {
+  .tablet-frame { transform: scale(.9); }
+}
+@media (max-width: 900px) {
+  .tablet-frame { transform: scale(.8); }
+}
