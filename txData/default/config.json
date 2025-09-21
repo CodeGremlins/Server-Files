@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "general": {
+    "serverName": "Server-Files"
+  },
+  "server": {
+    "dataPath": "C:/Users/codz/Desktop/Github/Server-Files/Files/"
+  }
+}

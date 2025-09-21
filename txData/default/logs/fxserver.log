@@ -1,0 +1,300 @@
+║             TXADMIN║ ================================================================
+║             TXADMIN║ ======== [8848] FXServer Starting - 21.9.2025 06.01.36          
+║             TXADMIN║ ================================================================
+[           resources] Scanning resources.
+[           resources] Found 77 resources.
+[          svadhesive] Authenticating server license key...
+[          svadhesive] Server license key authentication succeeded. Welcome!
+[    c-scripting-core] Creating script environments for monitor
+[      script:monitor] [txAdmin] Resource v8.0.1 threads and commands set up. All Ready.
+[           resources] Started resource monitor
+[ citizen-server-impl] Could not open Logo.png for reading.
+[    c-scripting-core] Creating script environments for chat
+[           resources] Started resource chat
+[    c-scripting-core] Creating script environments for hardcap
+[           resources] Started resource hardcap
+[    c-scripting-core] Creating script environments for oxmysql
+[           resources] Started resource oxmysql
+[    c-scripting-core] Creating script environments for cron
+[           resources] Started resource cron
+[    c-scripting-core] Creating script environments for es_extended
+[  script:es_extended] [INFO] Running migrations for ESX version v1.13.3
+[  script:es_extended] [esx_migration:v.1.13.3:ssn] Adding SSN column to users table.
+[           resources] Started resource es_extended
+[           resources] Started resource esx_chat_theme
+[    c-scripting-core] Creating script environments for esx_context
+[           resources] Started resource esx_context
+[    c-scripting-core] Creating script environments for esx_identity
+[           resources] Started resource esx_identity
+[    c-scripting-core] Creating script environments for esx_inventory
+[           resources] Started resource esx_inventory
+[    c-scripting-core] Creating script environments for esx_loadingscreen
+[           resources] Started resource esx_loadingscreen
+[           resources] Started resource esx_menu_default
+[           resources] Started resource esx_menu_dialog
+[           resources] Started resource esx_menu_list
+[           resources] Started resource skinchanger
+[    c-scripting-core] Creating script environments for esx_skin
+[           resources] Started resource esx_skin
+[    c-scripting-core] Creating script environments for esx_multicharacter
+[           resources] Started resource esx_multicharacter
+[    c-scripting-core] Creating script environments for esx_notify
+[           resources] Started resource esx_notify
+[    c-scripting-core] Creating script environments for esx_progressbar
+[           resources] Started resource esx_progressbar
+[    c-scripting-core] Creating script environments for esx_textui
+[           resources] Started resource esx_textui
+[ citizen-server-impl] Couldn't find resource category [ox].
+[           resources] Started resource bob74_ipl
+[    c-scripting-core] Creating script environments for pma-voice
+[           resources] Started resource pma-voice
+[    c-scripting-core] Creating script environments for esx_datastore
+[           resources] Started resource esx_datastore
+[    c-scripting-core] Creating script environments for esx_accessories
+[           resources] Started resource esx_accessories
+[    c-scripting-core] Creating script environments for esx_addonaccount
+[           resources] Started resource esx_addonaccount
+[    c-scripting-core] Creating script environments for esx_addoninventory
+[           resources] Started resource esx_addoninventory
+[    c-scripting-core] Creating script environments for esx_vehicleshop
+[           resources] Started resource esx_vehicleshop
+[    c-scripting-core] Creating script environments for esx_ambulancejob
+[           resources] Started resource esx_ambulancejob
+[           resources] Started resource esx_animations
+[    c-scripting-core] Creating script environments for esx_banking
+[           resources] Started resource esx_banking
+[    c-scripting-core] Creating script environments for esx_barbershop
+[           resources] Started resource esx_barbershop
+[    c-scripting-core] Creating script environments for esx_status
+[           resources] Started resource esx_status
+[    c-scripting-core] Creating script environments for esx_basicneeds
+[           resources] Started resource esx_basicneeds
+[    c-scripting-core] Creating script environments for esx_billing
+[           resources] Started resource esx_billing
+[    c-scripting-core] Creating script environments for esx_boat
+[           resources] Started resource esx_boat
+[    c-scripting-core] Creating script environments for esx_clotheshop
+[           resources] Started resource esx_clotheshop
+[           resources] Started resource esx_cruisecontrol
+[    c-scripting-core] Creating script environments for esx_license
+[           resources] Started resource esx_license
+[    c-scripting-core] Creating script environments for esx_dmvschool
+[           resources] Started resource esx_dmvschool
+[    c-scripting-core] Creating script environments for esx_drugs
+[           resources] Started resource esx_drugs
+[    c-scripting-core] Creating script environments for esx_garage
+[           resources] Started resource esx_garage
+[    c-scripting-core] Creating script environments for esx_hud
+[           resources] Started resource esx_hud
+[    c-scripting-core] Creating script environments for esx_joblisting
+[           resources] Started resource esx_joblisting
+[    c-scripting-core] Creating script environments for esx_jobs
+[           resources] Started resource esx_jobs
+[    c-scripting-core] Creating script environments for esx_lscustom
+[           resources] Started resource esx_lscustom
+[    c-scripting-core] Creating script environments for esx_society
+[           resources] Started resource esx_society
+[    c-scripting-core] Creating script environments for esx_mechanicjob
+[           resources] Started resource esx_mechanicjob
+[    c-scripting-core] Creating script environments for esx_optionalneeds
+[           resources] Started resource esx_optionalneeds
+[    c-scripting-core] Creating script environments for esx_policejob
+[           resources] Started resource esx_policejob
+[    c-scripting-core] Creating script environments for esx_property
+[           resources] Started resource esx_property
+[    c-scripting-core] Creating script environments for esx_rpchat
+[           resources] Started resource esx_rpchat
+[    c-scripting-core] Creating script environments for esx_service
+[           resources] Started resource esx_service
+[    c-scripting-core] Creating script environments for esx_shops
+[           resources] Started resource esx_shops
+[    c-scripting-core] Creating script environments for esx_taxijob
+[           resources] Started resource esx_taxijob
+[    c-scripting-core] Creating script environments for esx_weaponshop
+[           resources] Started resource esx_weaponshop
+[      script:oxmysql] [12.0.2-MariaDB] Database server connection established!
+[  script:es_extended] [INFO] ESX Legacy 1.13.4 initialized!
+[  script:es_extended] [esx_migration:v.1.13.3:ssn] No users found without SSN, migration not needed.
+[  script:es_extended] [SUCCESS] Successfully completed migrations for ESX version v1.13.3
+[script:esx_multichar] [INFO] Updated 1 columns to use VARCHAR(46)
+[ citizen-server-impl]         fff                          
+[ citizen-server-impl]   cccc ff   xx  xx     rr rr    eee  
+[ citizen-server-impl] cc     ffff   xx       rrr  r ee   e 
+[ citizen-server-impl] cc     ff     xx   ... rr     eeeee  
+[ citizen-server-impl]  ccccc ff   xx  xx ... rr      eeeee 
+[ citizen-server-impl]                                      
+[ citizen-server-impl] Authenticated with cfx.re Nucleus: https://realreddox-ebkq8b.users.cfx.re/
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[ script:esx_property] [INFO] Added Property into datastore_data table
+[      script:hardcap] Connecting: Codz
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[  script:es_extended] [INFO] Player "Codz Dev" has connected to the server. ID: 1
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[  script:es_extended] [INFO] Saved 1 player over 0.0 ms
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[  script:es_extended] [INFO] Saved 1 player over 0.0 ms
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+║          RealReddox║ /setgroup me superadmin
+[                 cmd] No such command /setgroup.
+║          RealReddox║ setgroup 1 superadmin
+[  script:es_extended] [WARNING] Superadmin detected, setting group to admin
+║          RealReddox║ setgroup 1 owner
+║          RealReddox║ group 1
+[  script:es_extended] SCRIPT ERROR: @es_extended/server/modules/commands.lua:560: attempt to index a boolean value (local 'xPlayer')
+[  script:es_extended] > cb (@es_extended/server/modules/commands.lua:560)
+[  script:es_extended] > ref (@es_extended/server/functions.lua:179)
+║          RealReddox║ say The group of ID: 1 is owner
+[    c-scripting-core] script error in native 00000000406b4b20: Argument at index 0 was null.
+[   script:esx_rpchat] SCRIPT ERROR: native 00000000406b4b20: Argument at index 0 was null.
+[   script:esx_rpchat] > routeMessage (@chat/sv_chat.lua:187)
+[   script:esx_rpchat] > ref (@chat/sv_chat.lua:241)
+[  script:es_extended] [INFO] Saved 1 player over 0.0 ms
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+║          RealReddox║ setgroup 1 superadmin
+[  script:es_extended] [WARNING] Superadmin detected, setting group to admin
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] server thread hitch warning: timer interval of 2041 milliseconds
+[      script:esx_hud] SCRIPT ERROR: @esx_hud/server/mileage.lua:11: attempt to index a nil value (global 'MySQL')
+[      script:esx_hud] > fn (@esx_hud/server/mileage.lua:11)
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[      script:esx_hud] SCRIPT ERROR: @esx_hud/server/mileage.lua:18: attempt to index a nil value (global 'MySQL')
+[      script:esx_hud] > Load (@esx_hud/server/mileage.lua:18)
+[      script:esx_hud] > Exist (@esx_hud/server/mileage.lua:76)
+[      script:esx_hud] > handler (@esx_hud/server/mileage.lua:86)
+[      script:esx_hud] SCRIPT ERROR: @esx_hud/server/mileage.lua:11: attempt to index a nil value (global 'MySQL')
+[      script:esx_hud] > fn (@esx_hud/server/mileage.lua:11)
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+║             TXADMIN║ txaReportResources 
+[      script:monitor] [txAdmin] Sending resources list to txAdmin.
+║          RealReddox║ stop "oxmysql"
+║             TXADMIN║ txaReportResources 
+[           resources] Stopping resource esx_accessories
+[           resources] Stopping resource esx_mechanicjob
+[           resources] Stopping resource esx_society
+[           resources] Stopping resource esx_addonaccount
+[           resources] Stopping resource esx_addoninventory
+[           resources] Stopping resource esx_ambulancejob
+[           resources] Stopping resource esx_animations
+[           resources] Stopping resource esx_banking
+[           resources] Stopping resource esx_barbershop
+[           resources] Stopping resource esx_basicneeds
+[           resources] Stopping resource esx_policejob
+[           resources] Stopping resource esx_billing
+[           resources] Stopping resource esx_boat
+[           resources] Stopping resource esx_clotheshop
+[           resources] Stopping resource esx_multicharacter
+[           resources] Stopping resource esx_context
+[           resources] Stopping resource esx_cruisecontrol
+[           resources] Stopping resource esx_dmvschool
+[           resources] Stopping resource esx_drugs
+[           resources] Stopping resource esx_hud
+[           resources] Stopping resource esx_identity
+[           resources] Stopping resource esx_joblisting
+[           resources] Stopping resource esx_jobs
+[           resources] Stopping resource esx_menu_default
+[           resources] Stopping resource esx_menu_dialog
+[           resources] Stopping resource esx_menu_list
+[           resources] Stopping resource esx_property
+[           resources] Stopping resource esx_rpchat
+[           resources] Stopping resource esx_service
+[           resources] Stopping resource esx_shops
+[           resources] Stopping resource esx_skin
+[           resources] Stopping resource esx_status
+[           resources] Stopping resource esx_taxijob
+[           resources] Stopping resource esx_vehicleshop
+[           resources] Stopping resource esx_weaponshop
+[           resources] Stopping resource es_extended
+[           resources] Stopping resource oxmysql
+[      script:monitor] [txAdmin] Sending resources list to txAdmin.
+║          RealReddox║ refresh 
+║             TXADMIN║ txaReportResources 
+[           resources] Scanning resources.
+[   resources:oxmysql] Warning: oxmysql does not have a resource manifest (fxmanifest.lua)
+[           resources] Found 5 new resources, and refreshed 0/76 resources.
+[           resources] 1 warning was encountered.
+[ citizen-server-impl] server thread hitch warning: timer interval of 852 milliseconds
+[      script:monitor] [txAdmin] Sending resources list to txAdmin.
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+║          RealReddox║ refresh 
+║             TXADMIN║ txaReportResources 
+[           resources] Scanning resources.
+[           resources] Found 2 new resources, and refreshed 0/80 resources.
+[      script:monitor] [txAdmin] Sending resources list to txAdmin.
+║          RealReddox║ ensure "oxmysql"
+║             TXADMIN║ txaReportResources 
+[    c-scripting-core] Creating script environments for oxmysql
+[           resources] Started resource oxmysql
+[ citizen-server-impl] server thread hitch warning: timer interval of 411 milliseconds
+[      script:monitor] [txAdmin] Sending resources list to txAdmin.
+[      script:oxmysql] [12.0.2-MariaDB] Database server connection established!
+[ citizen-server-impl] server thread hitch warning: timer interval of 942 milliseconds
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+║          RealReddox║ refresh 
+║             TXADMIN║ txaReportResources 
+[           resources] Scanning resources.
+[           resources] Found 0 new resources, and refreshed 0/82 resources.
+[      script:monitor] [txAdmin] Sending resources list to txAdmin.
+║          RealReddox║ ensure "ox_target"
+║             TXADMIN║ txaReportResources 
+[    c-scripting-core] Creating script environments for ox_lib
+[           resources] Started resource ox_lib
+[    c-scripting-core] Creating script environments for ox_target
+[           resources] Started resource ox_target
+[ citizen-server-impl] server thread hitch warning: timer interval of 1939 milliseconds
+[      script:monitor] [txAdmin] Sending resources list to txAdmin.
+║          RealReddox║ ensure ox_inventory
+[    c-scripting-core] Creating script environments for ox_inventory
+[           resources] Started resource ox_inventory
+[ citizen-server-impl] server thread hitch warning: timer interval of 2140 milliseconds
+[ script:ox_inventory] [ox_inventory] [INFO] 29 items have been copied from the database.
+[ script:ox_inventory] [ox_inventory] [INFO] You should restart the resource to load the new items.
+[ script:ox_inventory] [ox_inventory] [INFO] Database contains 33 items.
+║          RealReddox║ ensure ox_doorlock
+[    c-scripting-core] Creating script environments for ox_doorlock
+[           resources] Started resource ox_doorlock
+[ script:ox_inventory] [ox_inventory] [INFO] Inventory has loaded 247 items
+[  script:ox_doorlock] SCRIPT ERROR: @ox_doorlock/server/main.lua:247: ox_doorlock was unable to execute a query!
+[  script:ox_doorlock] Query: SELECT `id`, `name`, `data` FROM `ox_doorlock`
+[  script:ox_doorlock] []
+[  script:ox_doorlock] Table 'codegremlins.ox_doorlock' doesn't exist
+[  script:ox_doorlock] > cb (@ox_doorlock/server/main.lua:247)
+[  script:ox_doorlock] > onReady (@oxmysql/lib/MySQL.lua:140)
+[  script:ox_doorlock] > fn (@oxmysql/lib/MySQL.lua:147)
+[  script:ox_doorlock] > logError (@oxmysql/dist/build.js:26337)
+[  script:ox_doorlock] > rawQuery (@oxmysql/dist/build.js:26520)
+[  script:ox_doorlock] > processTicksAndRejections (node:internal/process/task_queues:96)
+[ citizen-server-impl] server thread hitch warning: timer interval of 396 milliseconds
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] server thread hitch warning: timer interval of 575 milliseconds
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] server thread hitch warning: timer interval of 573 milliseconds
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] server thread hitch warning: timer interval of 1986 milliseconds
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+║             TXADMIN║ txaEvent "adminsUpdated" "[1]"
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] server thread hitch warning: timer interval of 902 milliseconds
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[ citizen-server-impl] server thread hitch warning: timer interval of 801 milliseconds
+[      script:esx_hud] [ERROR] esx_hud: An error occurred while trying to get the current version!
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+[ citizen-server-impl] Server list query returned an error: System.Net.Sockets.SocketException: Connection reset by peer <- System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer. <- System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
