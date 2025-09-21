@@ -2094,6 +2094,14 @@
             The resource state. One of `"missing", "started", "starting", "stopped", "stopping", "uninitialized" or "unknown"`.
             </returns>
         </member>
+        <member name="M:CitizenFX.Server.Native.Natives.GetSeatPedIsUsing(System.Int32)">
+            <summary>
+            returns the seat index of the specified ped, if not seated or not in vehicle returns -3 just client natives
+            </summary>
+            <param name="ped">
+            the ped id
+            </param>
+        </member>
         <member name="M:CitizenFX.Server.Native.Natives.GetSelectedPedWeapon(System.Int32)">
             <summary>
             An alias of [GET_CURRENT_PED_WEAPON](#\_0xB0237302).
@@ -2682,6 +2690,25 @@
             <returns>
             Whether or not the ped is handcuffed.
             </returns>
+        </member>
+        <member name="M:CitizenFX.Server.Native.Natives.IsPedInAnyVehicle(System.Int32)">
+            <summary>
+            returns true if the specified ped is in any vehicle
+            </summary>
+            <param name="ped">
+            the ped id
+            </param>
+        </member>
+        <member name="M:CitizenFX.Server.Native.Natives.IsPedInVehicle(System.Int32,System.Int32)">
+            <summary>
+            returns true if the specified ped is in the speficied vehicle
+            </summary>
+            <param name="ped">
+            the ped id
+            </param>
+            <param name="vehicle">
+            the vehicle id
+            </param>
         </member>
         <member name="M:CitizenFX.Server.Native.Natives.IsPedRagdoll(System.Int32)">
             <summary>
@@ -6186,6 +6213,11 @@
             Returns the current state of the specified resource.
             </summary>
         </member>
+        <member name="F:CitizenFX.Server.Native.Hash.GET_SEAT_PED_IS_USING">
+            <summary>
+            returns the seat index of the specified ped, if not seated or not in vehicle returns -3 just client natives
+            </summary>
+        </member>
         <member name="F:CitizenFX.Server.Native.Hash.GET_SELECTED_PED_WEAPON">
             <summary>
             An alias of [GET_CURRENT_PED_WEAPON](#\_0xB0237302).
@@ -6549,6 +6581,16 @@
         <member name="F:CitizenFX.Server.Native.Hash.IS_PED_HANDCUFFED">
             <summary>
             IS_PED_HANDCUFFED
+            </summary>
+        </member>
+        <member name="F:CitizenFX.Server.Native.Hash.IS_PED_IN_ANY_VEHICLE">
+            <summary>
+            returns true if the specified ped is in any vehicle
+            </summary>
+        </member>
+        <member name="F:CitizenFX.Server.Native.Hash.IS_PED_IN_VEHICLE">
+            <summary>
+            returns true if the specified ped is in the speficied vehicle
             </summary>
         </member>
         <member name="F:CitizenFX.Server.Native.Hash.IS_PED_RAGDOLL">
