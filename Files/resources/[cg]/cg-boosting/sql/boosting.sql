@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS boosting_players (
+  identifier VARCHAR(60) PRIMARY KEY,
+  reputation INT NOT NULL DEFAULT 0,
+  daily_requests INT NOT NULL DEFAULT 0,
+  last_request INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS boosting_contracts (
+  id VARCHAR(64) PRIMARY KEY,
+  owner VARCHAR(60) NOT NULL,
+  tier VARCHAR(5) NOT NULL,
+  model VARCHAR(50) NOT NULL,
+  payout INT NOT NULL,
+  tracker TINYINT(1) NOT NULL DEFAULT 0,
+  vinScratch TINYINT(1) NOT NULL DEFAULT 0,
+  created_at INT NOT NULL,
+  status VARCHAR(16) NOT NULL DEFAULT 'pending',
+  INDEX(owner),
+  FOREIGN KEY (owner) REFERENCES boosting_players(identifier) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS boosting_runs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  contract_id VARCHAR(64) NOT NULL,
+  identifier VARCHAR(60) NOT NULL,
+  action VARCHAR(32) NOT NULL,
+  detail TEXT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX(identifier),
+  INDEX(contract_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS boosting_settings (
+  id INT PRIMARY KEY DEFAULT 1,
+  last_reset DATE NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

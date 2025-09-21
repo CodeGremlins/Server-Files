@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boosting Tablet</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard" id="boostingApp" style="display:none;">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="time">01:22 PM</div>
+                <div class="header-controls">
+                    <button class="header-btn"><i class="fas fa-bell"></i></button>
+                    <button class="header-btn"><i class="fas fa-cog"></i></button>
+                    <button class="header-btn" id="closeBtn"><i class="fas fa-power-off"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="nav-content">
+                <div class="nav-tabs">
+                    <button class="nav-tab" data-tab="home">HOME</button>
+                    <button class="nav-tab" data-tab="unlocks">UNLOCKS</button>
+                    <button class="nav-tab" data-tab="market">MARKET</button>
+                    <button class="nav-tab" data-tab="store">STORE</button>
+                    <button class="nav-tab" data-tab="contract-history">CONTRACT HISTORY</button>
+                    <button class="nav-tab" data-tab="leaderboard">LEADERBOARD</button>
+                    <button class="nav-tab active" data-tab="admin">ADMIN</button>
+                </div>
+                <div class="user-info">
+                    <span class="username">Sag</span>
+                    <div class="currency">
+                        <div class="currency-dot"></div>
+                        <span class="currency-amount">428 XNT</span>
+                    </div>
+                    <div class="level-info">
+                        <span class="level-text">LVL 48</span>
+                        <div class="level-bar">
+                            <div class="level-progress"></div>
+                        </div>
+                    </div>
+                    <span class="xp-text">11,052 / 11,500</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sub Navigation -->
+        <nav class="sub-nav">
+            <div class="sub-nav-content">
+                <button class="sub-nav-tab active" data-subtab="dashboard">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="sub-nav-tab" data-subtab="players">
+                    <i class="fas fa-users"></i>
+                    <span>Players</span>
+                </button>
+                <button class="sub-nav-tab" data-subtab="contracts">
+                    <i class="fas fa-file-text"></i>
+                    <span>Contracts</span>
+                </button>
+                <button class="sub-nav-tab" data-subtab="tools">
+                    <i class="fas fa-wrench"></i>
+                    <span>Tools</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="dashboard-content" class="content-section active">
+                <!-- Header -->
+                <div class="content-header">
+                    <h1>Boosting Operations</h1>
+                    <p>Monitor vehicle theft activities and manage operations</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span class="stat-title">TOTAL BOOSTERS</span>
+                        </div>
+                        <div class="stat-value">2</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <span class="stat-title">CURRENCY EARNED</span>
+                        </div>
+                        <div class="stat-value">1.6K</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span class="stat-title">BOOSTS COMPLETED</span>
+                        </div>
+                        <div class="stat-value">27</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-text"></i>
+                            </div>
+                            <span class="stat-title">TOTAL CONTRACTS</span>
+                        </div>
+                        <div class="stat-value">1</div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="content-grid">
+                    <!-- Recent Actions -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-indicator"></div>
+                            <h2>Recent Admin Actions</h2>
+                        </div>
+                        <div class="actions-list">
+                            <div class="action-item">
+                                <div class="action-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="action-content">
+                                    <p class="action-title">Removed 100 Reputation to Martin Duggan</p>
+                                    <div class="action-meta">
+                                        <span>Martin Duggan</span>
+                                        <span>•</span>
+                                        <span>Sep 8, 2025, 10:24 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-item">
+                                <div class="action-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="action-content">
+                                    <p class="action-title">Added 25 XNT to Martin Duggan balance</p>
+                                    <div class="action-meta">
+                                        <span>Martin Duggan</span>
+                                        <span>•</span>
+                                        <span>Sep 8, 2025, 10:24 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Boosters -->
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-trophy"></i>
+                            <h2>Top Boosters</h2>
+                        </div>
+                        <div class="boosters-list">
+                            <div class="booster-item">
+                                <div class="booster-rank">1</div>
+                                <div class="booster-avatar">S</div>
+                                <div class="booster-name">Sag</div>
+                                <div class="booster-level">
+                                    <div class="level-dot"></div>
+                                    <span>LVL 48</span>
+                                </div>
+                            </div>
+                            <div class="booster-item">
+                                <div class="booster-rank">2</div>
+                                <div class="booster-avatar">M</div>
+                                <div class="booster-name">Michael</div>
+                                <div class="booster-level">
+                                    <div class="level-dot"></div>
+                                    <span>LVL 1</span>
+                                </div>
+                            </div>
+                            <div class="booster-item">
+                                <div class="booster-rank">3</div>
+                                <div class="booster-avatar">A</div>
+                                <div class="booster-name">Alex</div>
+                                <div class="booster-level">
+                                    <div class="level-dot"></div>
+                                    <span>LVL 23</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other content sections -->
+            <div id="players-content" class="content-section">
+                <div class="content-header">
+                    <h1>Players Management</h1>
+                    <p>Manage player accounts and permissions</p>
+                </div>
+            </div>
+
+            <div id="contracts-content" class="content-section">
+                <div class="content-header">
+                    <h1>Contracts</h1>
+                    <p>Manage your boosting contracts</p>
+                </div>
+                <div class="contracts-layout">
+                    <div class="reputation-panel">
+                        <h2>Reputation</h2>
+                        <div class="rep-value"><span id="repAmount">0</span> RP</div>
+                        <div class="rep-bar-wrapper">
+                            <div class="rep-bar"><div class="rep-progress" id="repProgress" style="width:0%"></div></div>
+                            <div class="rep-tier" id="repTier">D</div>
+                        </div>
+                        <button class="primary-btn" id="requestContractBtn">Request Contract</button>
+                        <div class="rep-hint" id="requestHint"></div>
+                    </div>
+                    <div class="queue-panel">
+                        <h2>Available Contracts</h2>
+                        <div id="contractsList" class="contracts-list empty">No contracts yet. Click Request.</div>
+                    </div>
+                    <div class="active-panel">
+                        <h2>Active Contract</h2>
+                        <div id="activeContractContainer" class="active-contract empty">No active contract</div>
+                        <div class="active-actions" id="activeActions" style="display:none;">
+                            <button class="success-btn" id="completeBtn">Complete Delivery</button>
+                            <button class="warn-btn" id="vinScratchBtn" style="display:none;">VIN Scratch</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tools-content" class="content-section">
+                <div class="content-header">
+                    <h1>Admin Tools</h1>
+                    <p>Access administrative utilities</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
