@@ -15,6 +15,7 @@ Config.VINScratch = {
     cooldownHours = 24,
     repLoss = 50, -- optional risk
     chance = 0.15, -- base chance that a contract is VIN scratchable
+    requireTrackerRemoved = true -- must fully remove tracker before VIN scratch allowed
 }
 
 Config.ContractRequest = {
@@ -29,10 +30,12 @@ Config.Dispatch = {
     eventName = 'police:server:boostDispatch',
 }
 
+-- Drop-off locations (updated per user request)
+-- Provided values interpreted as three groups: (x,y,z,heading). Heading kept for future use, currently only x,y,z used.
 Config.DropOffs = {
-    vector3(1234.5, -3012.3, 5.9),
-    vector3(-456.2, -1023.4, 28.3),
-    vector3(234.7, 2178.5, 130.4)
+    vector4(319.3009, 3405.4067, 36.7479, 253.0479),
+    vector4(2416.3062, 3095.9504, 48.1529, 40.1105),
+    vector4(1130.6948, -794.9101, 57.4747, 251.6035)
 }
 
 -- Vehicles pool per tier (placeholder)
@@ -56,6 +59,74 @@ Config.Spawns = {
 
 Config.Debug = false
 
+-- Anti-abuse / failure handling
+Config.AntiAbuse = {
+    failOnVehicleDestroyed = true,   -- fail contract if target vehicle destroyed or despawns
+    engineHealthThreshold = 50.0,    -- if engine health drops below this treat as destroyed (0.0 to disable threshold check)
+    repPenalty = 5                   -- reputation loss on failure (set 0 to disable)
+}
+
 -- Item required to open the tablet UI
-Config.TabletItem = 'boosting_tablet'
+Config.TabletItem = 'water'
 Config.RequireTabletItem = true
+
+-- Delivery handling configuration
+Config.Delivery = {
+    radius = 6.0,            -- meters radius for valid drop
+    ignoreZ = true,          -- ignore vertical difference when checking distance
+    autoComplete = false,    -- we now require key press instead of auto
+    requireKeyPress = true,  -- press E in zone to deliver
+    key = 38,                -- default control (E)
+    requireDriver = true,    -- must be in driver seat
+    requireInsideVehicle = true, -- must be inside the boosted vehicle
+    showMarkerDistance = 60.0,   -- draw marker when within this distance
+    marker = { r = 30, g = 190, b = 120, a = 140 },
+    promptOffsetZ = 0.5,     -- 3D text offset
+}
+
+-- Blip settings for target vehicle (entity-attached)
+Config.TargetBlip = {
+    enabled = true,
+    sprite = 225,
+    colour = 2,
+    scale = 0.85,
+    route = true,       -- enable GPS route to moving target
+    label = 'Boost Target'
+}
+
+-- Tracker hacking system
+Config.Tracker = {
+    enabled = true,                -- only applies if contract.tracker == true
+    hackAttempts = 5,              -- number of successful hacks to permanently remove tracker
+    disableDurations = { 15, 25, 40, 60, 90 }, -- seconds disabled per successful hack (indexed by attempt #)
+    hackKey = 74,                  -- default H
+    requireRemovalToDeliver = true,-- must fully remove tracker before delivery allowed
+    progress = { duration = 5000, label = 'Bypassing Tracker...' }, -- optional ox_lib progress style
+    hackItem = 'hacking_laptop',   -- item required to perform each hack attempt
+    consumeItem = false,           -- set true if you want to remove one item per attempt
+    minigame = {
+        enabled = true,
+        -- sequence of difficulty steps for ox_lib skillcheck
+        sequence = { 'easy', 'medium', 'medium', 'hard' },
+        allowFailRetry = true,     -- if false failing one step consumes attempt time window
+        failCooldown = 5           -- seconds lockout after failed sequence (client side gate)
+    },
+    removalBonusPercent = 15       -- extra payout percent if tracker removed before delivery
+}
+
+-- Additional VIN scratch bonus (applied on delivery if scratched)
+Config.VINScratch.bonusPercent = 20 -- extra payout percent when scratched (e.g. +20%)
+
+-- Police tracker blip / ping settings
+Config.Police = {
+    jobs = { 'police', 'sheriff' },   -- job names considered law enforcement
+    pingInterval = 15,                -- seconds between automatic pings while tracker active
+    showWhileDisabled = false,        -- if true, pings still appear when tracker temporarily disabled
+    removeOnDisable = true,           -- remove blip immediately when disabled (until re-enabled)
+    blip = {
+        sprite = 225,
+        colour = 1,
+        scale = 0.9,
+        label = 'Stolen Vehicle'
+    }
+}

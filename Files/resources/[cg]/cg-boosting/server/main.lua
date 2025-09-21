@@ -4,6 +4,7 @@ local playerData = {}
 local contractQueue = {}
 local cooldowns = {}
 local pendingVehicleNet = {}
+local policeBlips = {} -- track active police blip states keyed by contract id
 
 local json = json or require('json') -- fallback if environment supplies
 
@@ -70,7 +71,8 @@ local function generateContract(identifier)
         time = tier.time,
         owner = identifier,
         vinScratch = vinScratch and 1 or 0,
-        status = 'pending'
+        status = 'pending',
+        trackerState = { hacks = 0, disabledUntil = 0, removed = false }
     }
     contractQueue[identifier] = contractQueue[identifier] or {}
     if #contractQueue[identifier] < Config.ContractRequest.queueSize then
@@ -203,38 +205,91 @@ RegisterNetEvent('cg-boosting:vehicleSpawned', function(netId, contractId)
     contract.vehicle = netId
 end)
 
-RegisterNetEvent('cg-boosting:completeDelivery', function()
+-- Failure if vehicle destroyed (client side detection can trigger this too)
+RegisterNetEvent('cg-boosting:vehicleFailed', function(reason)
     local src = source
     local xPlayer = ESX.GetPlayerFromId(src)
     if not xPlayer then return end
     local identifier = xPlayer.getIdentifier()
     local contract = activeContracts[identifier]
     if not contract then return end
-    if os.time() > contract.expires then
-        TriggerClientEvent('ox_lib:notify', src, { description = 'Contract expired', type = 'error' })
-        activeContracts[identifier] = nil
-        return
+    if contract.status == 'failed' or contract.status == 'completed' then return end
+    contract.status = 'failed'
+    local penalty = (Config.AntiAbuse and Config.AntiAbuse.repPenalty) or 0
+    if penalty > 0 then
+        local pdata = playerData[identifier]
+        pdata.rep = math.max(0, pdata.rep - penalty)
+        MySQL.update('UPDATE boosting_players SET reputation = ? WHERE identifier = ?', { pdata.rep, identifier })
+        TriggerClientEvent('cg-boosting:reputation', src, { rep = pdata.rep })
     end
-    -- Validate player near drop-off and inside spawned vehicle (basic)
+    MySQL.update('UPDATE boosting_contracts SET status = ? WHERE id = ?', { 'failed', contract.id })
+    MySQL.insert('INSERT INTO boosting_runs (contract_id, identifier, action, detail) VALUES (?, ?, ?, ?)', { contract.id, identifier, 'fail', reason or '' })
+    TriggerClientEvent('ox_lib:notify', src, { description = 'Contract failed: vehicle destroyed', type = 'error' })
+    TriggerClientEvent('cg-boosting:delivered', src) -- reuse client cleanup
+    activeContracts[identifier] = nil
+end)
+
+-- Internal reusable delivery processor
+local function processDelivery(src)
+    local xPlayer = ESX.GetPlayerFromId(src)
+    if not xPlayer then return false, 'no_player' end
+    local identifier = xPlayer.getIdentifier()
+    local contract = activeContracts[identifier]
+    if not contract then return false, 'no_active' end
+    if os.time() > contract.expires then
+        activeContracts[identifier] = nil
+        TriggerClientEvent('ox_lib:notify', src, { description = 'Contract expired', type = 'error' })
+        return false, 'expired'
+    end
+    local cfg = Config.Delivery or { radius = 6.0, ignoreZ = true }
     local ped = GetPlayerPed(src)
     local veh = GetVehiclePedIsIn(ped, false)
-    if veh == 0 then
+    if cfg.requireInsideVehicle and veh == 0 then
         TriggerClientEvent('ox_lib:notify', src, { description = 'Get in the car', type = 'error' })
-        return
+        return false, 'not_in_vehicle'
     end
-    if contract.vehicle and veh ~= NetworkGetEntityFromNetworkId(contract.vehicle) then
+    if cfg.requireDriver and veh ~= 0 and GetPedInVehicleSeat(veh, -1) ~= ped then
+        TriggerClientEvent('ox_lib:notify', src, { description = 'Be driver to deliver', type = 'error' })
+        return false, 'not_driver'
+    end
+    if veh ~= 0 and contract.vehicle and veh ~= NetworkGetEntityFromNetworkId(contract.vehicle) then
         TriggerClientEvent('ox_lib:notify', src, { description = 'Wrong vehicle', type = 'error' })
-        return
+        return false, 'wrong_vehicle'
     end
     local coords = GetEntityCoords(ped)
     local dx = coords.x - contract.drop.x
     local dy = coords.y - contract.drop.y
-    local dz = coords.z - contract.drop.z
-    if (dx*dx + dy*dy + dz*dz) > (25.0) then -- ~5m radius squared (5^2=25)
-        TriggerClientEvent('ox_lib:notify', src, { description = 'Not at drop-off', type = 'error' })
-        return
+    local dz = (cfg.ignoreZ and 0.0) or (coords.z - contract.drop.z)
+    local dist2 = dx*dx + dy*dy + dz*dz
+    local radius = cfg.radius or 6.0
+    if dist2 > (radius * radius) then
+        if Config.Debug then
+            TriggerClientEvent('ox_lib:notify', src, { description = ('Not at drop-off (%.1fm away)'):format(math.sqrt(dist2)), type = 'error' })
+        else
+            TriggerClientEvent('ox_lib:notify', src, { description = 'Not at drop-off', type = 'error' })
+        end
+        return false, 'not_in_zone'
     end
+    -- If tracker must be removed first
+    if Config.Tracker and Config.Tracker.enabled and Config.Tracker.requireRemovalToDeliver and contract.tracker and not contract.trackerState.removed then
+        TriggerClientEvent('ox_lib:notify', src, { description = 'Remove tracker before delivering', type = 'error' })
+        return false, 'tracker_active'
+    end
+    -- Success: payout & rep (+ VIN scratch bonus if flagged)
     local payout = contract.payout
+    -- VIN scratch bonus
+    if contract.vinScratch == 1 and contract.vinBonusApplied then
+        -- already applied (shouldn't happen twice)
+    elseif contract.vinScratch == 1 and Config.VINScratch and Config.VINScratch.bonusPercent and contract.vinScratched then
+        local vinBonus = math.floor(payout * (Config.VINScratch.bonusPercent / 100))
+        payout = payout + vinBonus
+        contract.vinBonusApplied = true
+    end
+    -- Tracker removal bonus
+    if contract.tracker and Config.Tracker and Config.Tracker.removalBonusPercent and contract.trackerState and contract.trackerState.removed then
+        local trackBonus = math.floor(contract.payout * (Config.Tracker.removalBonusPercent / 100))
+        payout = payout + trackBonus
+    end
     xPlayer.addAccountMoney('black_money', payout)
     local pdata = playerData[identifier]
     pdata.rep = pdata.rep + contract.repGain
@@ -243,7 +298,33 @@ RegisterNetEvent('cg-boosting:completeDelivery', function()
     MySQL.insert('INSERT INTO boosting_runs (contract_id, identifier, action, detail) VALUES (?, ?, ?, ?)', { contract.id, identifier, 'complete', payout })
     TriggerClientEvent('cg-boosting:reputation', src, { rep = pdata.rep })
     TriggerClientEvent('ox_lib:notify', src, { description = ('Delivered! +$%d | +%d rep'):format(payout, contract.repGain), type = 'success' })
+
+    -- Attempt to delete vehicle server-side as fallback (client also cleans up)
+    if contract.vehicle then
+        local ent = NetworkGetEntityFromNetworkId(contract.vehicle)
+        if ent and DoesEntityExist(ent) then
+            DeleteEntity(ent)
+        end
+    end
+
     activeContracts[identifier] = nil
+    -- Inform client to perform local cleanup (blips, entity if still exists)
+    TriggerClientEvent('cg-boosting:delivered', src)
+    return true
+end
+
+RegisterNetEvent('cg-boosting:completeDelivery', function()
+    local src = source
+    processDelivery(src)
+end)
+
+-- Auto-complete from client detection (sanity re-validates same rules)
+RegisterNetEvent('cg-boosting:autoCompleteAttempt', function()
+    local src = source
+    -- Only attempt if autoComplete config still enabled (backwards compatibility)
+    if Config.Delivery and Config.Delivery.autoComplete then
+        processDelivery(src)
+    end
 end)
 
 -- VIN scratch placeholder
@@ -254,15 +335,130 @@ RegisterNetEvent('cg-boosting:vinScratch', function()
     local identifier = xPlayer.getIdentifier()
     local contract = activeContracts[identifier]
     if not contract or contract.vinScratch ~= 1 then return end
-    -- custom logic to grant vehicle
-    TriggerClientEvent('ox_lib:notify', src, { description = 'VIN scratched. Vehicle is now yours (placeholder).', type = 'success' })
+    if Config.VINScratch.requireTrackerRemoved and contract.tracker and Config.Tracker and Config.Tracker.enabled then
+        local state = contract.trackerState
+        if not (state and state.removed) then
+            TriggerClientEvent('ox_lib:notify', src, { description = 'Remove tracker first', type = 'error' })
+            return
+        end
+    end
+    if contract.vinScratched then
+        TriggerClientEvent('ox_lib:notify', src, { description = 'VIN already scratched', type = 'error' })
+        return
+    end
+    contract.vinScratched = true
+    TriggerClientEvent('ox_lib:notify', src, { description = 'VIN scratched. Bonus will be added on delivery.', type = 'success' })
+    -- Apply rep penalty (risk) immediately
     local pdata = playerData[identifier]
     pdata.rep = math.max(0, pdata.rep - (Config.VINScratch.repLoss or 0))
     MySQL.update('UPDATE boosting_players SET reputation = ? WHERE identifier = ?', { pdata.rep, identifier })
-    MySQL.update('UPDATE boosting_contracts SET status = ? WHERE id = ?', { 'vin_scratch', contract.id })
-    MySQL.insert('INSERT INTO boosting_runs (contract_id, identifier, action, detail) VALUES (?, ?, ?, ?)', { contract.id, identifier, 'vin_scratch', '' })
     TriggerClientEvent('cg-boosting:reputation', src, { rep = pdata.rep })
-    activeContracts[identifier] = nil
+    MySQL.insert('INSERT INTO boosting_runs (contract_id, identifier, action, detail) VALUES (?, ?, ?, ?)', { contract.id, identifier, 'vin_scratch', 'pending_delivery' })
+end)
+
+-- Tracker hack request
+RegisterNetEvent('cg-boosting:hackTracker', function()
+    local src = source
+    local xPlayer = ESX.GetPlayerFromId(src)
+    if not xPlayer then return end
+    local identifier = xPlayer.getIdentifier()
+    local contract = activeContracts[identifier]
+    if not contract or not contract.tracker or not (Config.Tracker and Config.Tracker.enabled) then return end
+    local state = contract.trackerState
+    if state.removed then
+        TriggerClientEvent('ox_lib:notify', src, { description = 'Tracker already removed', type = 'success' })
+        return
+    end
+    if state.disabledUntil > os.time() then
+        local remain = state.disabledUntil - os.time()
+        TriggerClientEvent('ox_lib:notify', src, { description = ('Tracker offline (%ds)'):format(remain), type = 'info' })
+        return
+    end
+    -- Item requirement
+    if Config.Tracker.hackItem then
+        local item = xPlayer.getInventoryItem(Config.Tracker.hackItem)
+        local count = item and (item.count or item.amount) or 0
+        if count <= 0 then
+            TriggerClientEvent('ox_lib:notify', src, { description = 'Missing hacking device', type = 'error' })
+            return
+        end
+        if Config.Tracker.consumeItem then
+            xPlayer.removeInventoryItem(Config.Tracker.hackItem, 1)
+        end
+    end
+    -- Perform hack progression (simplified: always succeeds) - could add minigame hook
+    state.hacks = state.hacks + 1
+    local idx = state.hacks
+    local disableDur = (Config.Tracker.disableDurations[idx] or Config.Tracker.disableDurations[#Config.Tracker.disableDurations])
+    if state.hacks >= Config.Tracker.hackAttempts then
+        state.removed = true
+        state.disabledUntil = os.time() + 999999 -- effectively permanent
+        TriggerClientEvent('ox_lib:notify', src, { description = 'Tracker permanently removed!', type = 'success' })
+        MySQL.insert('INSERT INTO boosting_runs (contract_id, identifier, action, detail) VALUES (?, ?, ?, ?)', { contract.id, identifier, 'tracker_removed', state.hacks })
+    else
+        state.disabledUntil = os.time() + disableDur
+        TriggerClientEvent('ox_lib:notify', src, { description = ('Tracker disabled for %ds (%d/%d)'):format(disableDur, state.hacks, Config.Tracker.hackAttempts), type = 'success' })
+        MySQL.insert('INSERT INTO boosting_runs (contract_id, identifier, action, detail) VALUES (?, ?, ?, ?)', { contract.id, identifier, 'tracker_hack', state.hacks })
+    end
+    -- Update client with tracker state
+    TriggerClientEvent('cg-boosting:trackerState', src, state)
+end)
+
+-- Periodic police ping thread
+CreateThread(function()
+    while true do
+        local interval = (Config.Police and Config.Police.pingInterval) or 15
+        if interval < 5 then interval = 5 end
+        if Config.Police then
+            local now = os.time()
+            for identifier, contract in pairs(activeContracts) do
+                if contract.tracker and Config.Tracker and Config.Tracker.enabled then
+                    local state = contract.trackerState
+                    local trackerActive = state and (not state.removed) and (state.disabledUntil <= now)
+                    if trackerActive or (Config.Police.showWhileDisabled and not (state and state.removed)) then
+                        -- fetch entity
+                        local ent
+                        if contract.vehicle then
+                            ent = NetworkGetEntityFromNetworkId(contract.vehicle)
+                        end
+                        if ent and DoesEntityExist(ent) then
+                            local coords = GetEntityCoords(ent)
+                            -- Send ping to police players
+                            local jobs = (Config.Police.jobs or {})
+                            for _, playerId in ipairs(ESX.GetPlayers()) do
+                                local xp = ESX.GetPlayerFromId(playerId)
+                                if xp then
+                                    local jobName = (xp.job and xp.job.name) or ''
+                                    for _, pj in ipairs(jobs) do
+                                        if pj == jobName then
+                                            TriggerClientEvent('cg-boosting:policePing', playerId, contract.id, coords, trackerActive)
+                                            break
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    elseif Config.Police.removeOnDisable and state and state.disabledUntil > now then
+                        -- instruct removal for disabled period
+                        local jobs = (Config.Police.jobs or {})
+                        for _, playerId in ipairs(ESX.GetPlayers()) do
+                            local xp = ESX.GetPlayerFromId(playerId)
+                            if xp then
+                                local jobName = (xp.job and xp.job.name) or ''
+                                for _, pj in ipairs(jobs) do
+                                    if pj == jobName then
+                                        TriggerClientEvent('cg-boosting:policeRemovePing', playerId, contract.id)
+                                        break
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        Wait(((Config.Police and Config.Police.pingInterval) or 15) * 1000)
+    end
 end)
 
 lib.addCommand('boost', {

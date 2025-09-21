@@ -207,31 +207,57 @@
             </div>
 
             <div id="contracts-content" class="content-section">
-                <div class="content-header">
+                <div class="content-header compact">
                     <h1>Contracts</h1>
-                    <p>Manage your boosting contracts</p>
+                    <p>Manage, accept and complete boosting contracts</p>
                 </div>
-                <div class="contracts-layout">
-                    <div class="reputation-panel">
-                        <h2>Reputation</h2>
-                        <div class="rep-value"><span id="repAmount">0</span> RP</div>
-                        <div class="rep-bar-wrapper">
-                            <div class="rep-bar"><div class="rep-progress" id="repProgress" style="width:0%"></div></div>
-                            <div class="rep-tier" id="repTier">D</div>
+
+                <!-- XP / Tier progression bar -->
+                <div class="tier-bar" id="xpTierBar" aria-label="Tier progression">
+                    <div class="tier-chip tier-D active" data-tier="D"><span>D Class</span></div>
+                    <div class="tier-chip tier-C" data-tier="C"><span>C Class</span></div>
+                    <div class="tier-chip tier-B" data-tier="B"><span>B Class</span></div>
+                    <div class="tier-chip tier-A" data-tier="A"><span>A Class</span></div>
+                    <div class="tier-chip tier-S" data-tier="S"><span>S Class</span></div>
+                </div>
+
+                <!-- Active Contract Banner -->
+                <div class="active-banner" id="activeBanner">
+                    <div class="banner-left">
+                        <div class="banner-label">Active contract</div>
+                        <div class="banner-contract" id="bannerContractText">None</div>
+                    </div>
+                    <div class="banner-meta" id="bannerMetaText">No active contract</div>
+                    <div class="banner-actions">
+                        <button class="primary-btn small" id="requestContractBtn">Start receiving contracts</button>
+                    </div>
+                </div>
+
+                <!-- Split Grid Panels -->
+                <div class="contracts-grid-panels">
+                    <div class="panel left-panel">
+                        <div class="panel-header"><h2>Available contracts</h2></div>
+                        <div id="contractsList" class="contracts-list empty">No queued contracts</div>
+                    </div>
+                    <div class="panel right-panel">
+                        <div class="panel-header"><h2>Details</h2></div>
+                        <div class="reputation-panel refined">
+                            <div class="rep-top">
+                                <div class="rep-value"><span id="repAmount">0</span> RP</div>
+                                <div class="rep-tier-badge" id="repTier">D</div>
+                            </div>
+                            <div class="rep-bar-wrapper wide">
+                                <div class="rep-bar"><div class="rep-progress" id="repProgress" style="width:0%"></div></div>
+                            </div>
+                            <div class="rep-hint" id="requestHint"></div>
                         </div>
-                        <button class="primary-btn" id="requestContractBtn">Request Contract</button>
-                        <div class="rep-hint" id="requestHint"></div>
-                    </div>
-                    <div class="queue-panel">
-                        <h2>Available Contracts</h2>
-                        <div id="contractsList" class="contracts-list empty">No contracts yet. Click Request.</div>
-                    </div>
-                    <div class="active-panel">
-                        <h2>Active Contract</h2>
-                        <div id="activeContractContainer" class="active-contract empty">No active contract</div>
-                        <div class="active-actions" id="activeActions" style="display:none;">
-                            <button class="success-btn" id="completeBtn">Complete Delivery</button>
-                            <button class="warn-btn" id="vinScratchBtn" style="display:none;">VIN Scratch</button>
+                        <div class="active-panel refined">
+                            <h2>Active Contract</h2>
+                            <div id="activeContractContainer" class="active-contract empty">No active contract</div>
+                            <div class="active-actions" id="activeActions" style="display:none;">
+                                <button class="success-btn" id="completeBtn">Complete Delivery</button>
+                                <button class="warn-btn" id="vinScratchBtn" style="display:none;">VIN Scratch</button>
+                            </div>
                         </div>
                     </div>
                 </div>

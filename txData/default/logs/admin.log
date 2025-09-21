@@ -23,3 +23,9 @@
 [06:40:34][RealReddox] [RealReddox] executed "ensure ox_inventory"
 [06:40:37][RealReddox] [RealReddox] executed "ensure ox_doorlock"
 [06:52:52][RealReddox] Changing own identifiers.
+================================================================
+======== txAdmin v8.0.1 atop fxserver 19826 Starting - 21.9.2025 17.20.39
+================================================================
+[17:22:42][RealReddox] Ensured resource "cg-boosting"
+[17:23:01][RealReddox] [RealReddox] executed "setgroup 1 owner"
+[17:23:17][RealReddox] [RealReddox] executed "setgroup 1 superadmin"

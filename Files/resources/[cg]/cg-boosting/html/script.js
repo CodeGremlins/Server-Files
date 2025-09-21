@@ -163,6 +163,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const vinScratchBtn = document.getElementById('vinScratchBtn');
     const activeActions = document.getElementById('activeActions');
     const closeBtn = document.getElementById('closeBtn');
+    const tierBar = document.getElementById('xpTierBar');
+    const bannerContractText = document.getElementById('bannerContractText');
+    const bannerMetaText = document.getElementById('bannerMetaText');
 
     let contractQueue = [];
     let activeContract = null;
@@ -187,6 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function openApp() {
         appRoot.style.display = 'block';
+        document.body.classList.add('boosting-open');
         // default to contracts tab
         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
         const contractsNav = Array.from(document.querySelectorAll('.nav-tab')).find(t => t.dataset.tab === 'contract-history') || null;
@@ -201,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function closeApp() {
         appRoot.style.display = 'none';
+        document.body.classList.remove('boosting-open');
         clearCountdown();
         activeContract = null;
     }
@@ -229,6 +234,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const span = nextTier.repRequired - currentTier.repRequired;
             const into = (data.rep||0) - currentTier.repRequired;
             repProgressEl.style.width = Math.min(100, (into/span)*100).toFixed(1) + '%';
+        }
+
+        // Highlight tiers in bar
+        if (tierBar) {
+            const chips = tierBar.querySelectorAll('.tier-chip');
+            chips.forEach(chip => {
+                chip.classList.remove('active','unlocked','locked');
+                const tierName = chip.dataset.tier;
+                const tierObj = tiersCache.find(t=>t.name===tierName);
+                if (!tierObj) return;
+                if ((data.rep||0) >= tierObj.repRequired) {
+                    chip.classList.add('unlocked');
+                } else {
+                    chip.classList.add('locked');
+                }
+                if (tierName === currentTier.name) chip.classList.add('active');
+            });
         }
     }
 
@@ -273,6 +295,8 @@ document.addEventListener('DOMContentLoaded', function() {
             activeContainer.classList.add('empty');
             activeContainer.innerHTML = 'No active contract';
             activeActions.style.display = 'none';
+            if (bannerContractText) bannerContractText.textContent = 'None';
+            if (bannerMetaText) bannerMetaText.textContent = 'No active contract';
             return;
         }
         activeContainer.classList.remove('empty');
@@ -282,6 +306,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="active-line">Payout: $${c.payout} | Rep: +${c.repGain}</div>
             <div class="active-line">Tracker: ${c.tracker ? 'Yes':'No'}</div>
             <div class="active-line">Time Left: <span id="timeLeft">--:--</span></div>`;
+        if (bannerContractText) bannerContractText.textContent = `${c.model.toUpperCase()} (${c.tier} Class)`;
+        if (bannerMetaText) bannerMetaText.textContent = `Reward: $${c.payout} • +${c.repGain} RP`;
         startCountdown();
     }
 
